@@ -45,3 +45,12 @@ class TestSpreadSheet(TestCase):
         cell = "A1"
         sheet.set(cell, "='Apple")
         self.assertEqual("#Error", sheet.evaluate(cell))
+
+    def test_eval_formula_with_reference_to_cell(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        another_cell = "B1"
+        another_cell_value = 42
+        sheet.set(cell, f"={another_cell}")
+        sheet.set(another_cell, another_cell_value)
+        self.assertEqual(another_cell_value, sheet.evaluate(cell))

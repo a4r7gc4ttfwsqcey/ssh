@@ -20,8 +20,11 @@ class SpreadSheet:
                 return value[2:-1]
             elif value.startswith("="):
                 try:
-                    # Evaluate the expression after '=' assuming it's a simple integer for now
-                    return int(value[1:])
+                    # Evaluate the expression after '=' assuming it's a simple integer or a reference to another cell
+                    if value[1:].isdigit():
+                        return int(value[1:])
+                    else:
+                        return self.evaluate(value[1:])
                 except ValueError:
                     return "#Error"
         return "#Error"
