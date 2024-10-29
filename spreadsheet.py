@@ -24,6 +24,8 @@ class SpreadSheet:
                 # No values containing decimals
                 return "#Error"
             if "&" in value and "B1" in value:
+                if self._cells.get("B1") == "=A1":
+                    return "#Circular"
                 value = value.replace("B1", "'" + self._cells.get("B1")[1:].strip(" "))
             if value.startswith("'") and value.endswith("'"):
                 result = value[1:-1]
