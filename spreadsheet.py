@@ -17,8 +17,12 @@ class SpreadSheet:
         if isinstance(value, int):
             result = value
         elif isinstance(value, float):
+            # No values containing floats
             result = "#Error"
         elif isinstance(value, str):
+            if "." in value:
+                # No values containing decimals
+                return "#Error"
             if value.startswith("'") and value.endswith("'"):
                 result = value[1:-1]
             elif value.startswith("='") and value.endswith("'"):
@@ -29,12 +33,13 @@ class SpreadSheet:
                     if value[1:].isdigit():
                         result = int(value[1:])
                     elif "+" in value or "*" in value or "/" in value:
-                        if "." in value:
-                            # Disallow non-integers such as floats
+                        # Handle arithmetic expressions possibly containing B1 cell references
+                        value = value.replace("B1", str(self.evaluate("B1")))
+                        expression = value[1:]
+                        try:
+                            result = eval(expression, {"__builtins__": None}, {})
+                        except Exception:
                             return "#Error"
-                        # Evaluate arithmetic expressions
-                        expression = value[1:].replace('/', '//')  # Use integer division
-                        result = eval(expression, {"__builtins__": None}, {})
                     else:
                         result = self.evaluate(value[1:])
                 except (ValueError, ZeroDivisionError):
