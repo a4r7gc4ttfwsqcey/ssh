@@ -22,3 +22,8 @@ class TestSpreadSheet(TestCase):
         sheet.set(cell, "'Apple'")
         self.assertEqual("Apple", sheet.evaluate(cell))
 
+    def test_eval_str_invalid_quote(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, "'Apple")
+        self.assertEqual("#Error", sheet.evaluate(cell))
