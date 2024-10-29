@@ -131,3 +131,9 @@ class TestSpreadSheet(TestCase):
         cell = "A1"
         sheet.set(cell, "='Hello'&'World'")
         self.assertEqual("Hello World", sheet.evaluate(cell))
+
+    def test_eval_formula_with_broken_string_concatenations(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, "='Hello'&'World")
+        self.assertEqual("#Error", sheet.evaluate(cell))
