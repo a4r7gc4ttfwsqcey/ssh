@@ -185,3 +185,12 @@ class TestSpreadSheet(TestCase):
         sheet.set(cell, f"=2*(1+{another_cell})")
         sheet.set(another_cell, another_cell_value)
         self.assertEqual(6, sheet.evaluate(cell))
+
+    def test_eval_arithmetic_formula_with_parenthesis_and_refs(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        another_cell = "B1"
+        another_cell_value = 2
+        sheet.set(cell, f"=2 * (1 + {another_cell})")
+        sheet.set(another_cell, another_cell_value)
+        self.assertEqual(6, sheet.evaluate(cell))
