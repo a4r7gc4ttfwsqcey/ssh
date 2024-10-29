@@ -9,3 +9,9 @@ class TestSpreadSheet(TestCase):
         cell = "A1"
         sheet.set(cell, 1)
         self.assertEqual(1, sheet.evaluate(cell))
+
+    def test_eval_non_int(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, 1.5)
+        self.assertEqual("#Error", sheet.evaluate(cell))
