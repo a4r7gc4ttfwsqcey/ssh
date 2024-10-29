@@ -106,3 +106,13 @@ class TestSpreadSheet(TestCase):
         sheet.set(cell, f"=1+{another_cell}")
         sheet.set(another_cell, another_cell_value)
         self.assertEqual(4, sheet.evaluate(cell))
+
+    def test_eval_formula_with_arithmetic_and_invalid_reference(self):
+        # Should get the value from B1 and perform the arithmetic operation on the two numbers
+        sheet = SpreadSheet()
+        cell = "A1"
+        another_cell = "B1"
+        another_cell_value = 3.1
+        sheet.set(cell, f"=1+{another_cell}")
+        sheet.set(another_cell, another_cell_value)
+        self.assertEqual("#Error", sheet.evaluate(cell))
