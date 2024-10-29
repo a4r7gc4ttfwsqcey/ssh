@@ -204,3 +204,11 @@ class TestSpreadSheet(TestCase):
         sheet.set(another_cell, another_cell_value)
         self.assertEqual("#Error", sheet.evaluate(cell))
 
+    def test_eval_arithmetic_formula_with_parens_and_circular_ref(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        another_cell = "B1"
+        another_cell_value = f"={cell}"
+        sheet.set(cell, f"=2*(1+{another_cell})")
+        sheet.set(another_cell, another_cell_value)
+        self.assertEqual("#Circular", sheet.evaluate(cell))
