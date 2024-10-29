@@ -3,29 +3,40 @@ class SpreadSheet:
 
     def __init__(self):
         self._cells = {}
+        self._evaluating = set()
 
     def set(self, cell: str, value) -> None:
         self._cells[cell] = value
 
     def evaluate(self, cell: str):
+        if cell in self._evaluating:
+            return "#Circular"
+        self._evaluating.add(cell)
+        
         value = self._cells.get(cell)
         if isinstance(value, int):
-            return value
+            result = value
         elif isinstance(value, float):
-            return "#Error"
+            result = "#Error"
         elif isinstance(value, str):
             if value.startswith("'") and value.endswith("'"):
-                return value[1:-1]
+                result = value[1:-1]
             elif value.startswith("='") and value.endswith("'"):
-                return value[2:-1]
+                result = value[2:-1]
             elif value.startswith("="):
                 try:
                     # Evaluate the expression after '=' assuming it's a simple integer or a reference to another cell
                     if value[1:].isdigit():
-                        return int(value[1:])
+                        result = int(value[1:])
                     else:
-                        return self.evaluate(value[1:])
+                        result = self.evaluate(value[1:])
                 except ValueError:
-                    return "#Error"
-        return "#Error"
+                    result = "#Error"
+            else:
+                result = "#Error"
+        else:
+            result = "#Error"
+        
+        self._evaluating.remove(cell)
+        return result
 
