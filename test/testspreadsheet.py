@@ -33,3 +33,9 @@ class TestSpreadSheet(TestCase):
         cell = "A1"
         sheet.set(cell, "='Apple'")
         self.assertEqual("Apple", sheet.evaluate(cell))
+
+    def test_eval_int_formula(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, "=1")
+        self.assertEqual(1, sheet.evaluate(cell))
