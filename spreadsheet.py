@@ -1,3 +1,4 @@
+
 class SpreadSheet:
 
     def __init__(self):
@@ -11,4 +12,5 @@ class SpreadSheet:
         return self._cells.get(cell, '')
 
     def evaluate(self, cell: str) -> int | str:
-        pass
+        return self._cells[cell]
+
