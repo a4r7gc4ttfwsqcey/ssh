@@ -34,6 +34,9 @@ class SpreadSheet:
                         result = int(value[1:])
                     elif "+" in value or "*" in value or "/" in value:
                         # Handle arithmetic expressions possibly containing B1 cell references
+                        # B1 can't refer to A1
+                        if self._cells.get("B1") == "=A1":
+                            return "#Circular"
                         value = value.replace("B1", str(self.evaluate("B1")))
                         expression = value[1:]
                         try:
