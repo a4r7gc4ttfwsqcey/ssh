@@ -90,3 +90,9 @@ class TestSpreadSheet(TestCase):
         cell = "A1"
         sheet.set(cell, f"=1/0")
         self.assertEqual("#Error", sheet.evaluate(cell))
+
+    def test_eval_formula_with_multiplication_and_addition_priority(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, f"=1+3*2")
+        self.assertEqual(7, sheet.evaluate(cell))

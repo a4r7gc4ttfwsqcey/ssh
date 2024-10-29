@@ -28,12 +28,16 @@ class SpreadSheet:
                     # Evaluate the expression after '=' assuming it's a simple integer or a reference to another cell
                     if value[1:].isdigit():
                         result = int(value[1:])
-                    elif "+" in value:
-                        parts = value[1:].split('+')
-                        result = sum(int(part) for part in parts)
+                    elif "+" in value or "*" in value or "/" in value:
+                        if "." in value:
+                            # Disallow non-integers such as floats
+                            return "#Error"
+                        # Evaluate arithmetic expressions
+                        expression = value[1:].replace('/', '//')  # Use integer division
+                        result = eval(expression, {"__builtins__": None}, {})
                     else:
                         result = self.evaluate(value[1:])
-                except ValueError:
+                except (ValueError, ZeroDivisionError):
                     result = "#Error"
             else:
                 result = "#Error"
