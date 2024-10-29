@@ -27,3 +27,9 @@ class TestSpreadSheet(TestCase):
         cell = "A1"
         sheet.set(cell, "'Apple")
         self.assertEqual("#Error", sheet.evaluate(cell))
+
+    def test_eval_str_formula(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, "='Apple'")
+        self.assertEqual("Apple", sheet.evaluate(cell))

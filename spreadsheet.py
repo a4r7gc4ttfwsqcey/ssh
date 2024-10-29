@@ -11,8 +11,10 @@ class SpreadSheet:
         value = self._cells[cell]
         if isinstance(value, int):
             return value
-        elif isinstance(value, str) and value.startswith("'") and value.endswith("'"):
-            return value[1:-1]
-        else:
-            return "#Error"
+        elif isinstance(value, str):
+            if value.startswith("'") and value.endswith("'"):
+                return value[1:-1]
+            elif value.startswith("='") and value.endswith("'"):
+                return value[2:-1]
+        return "#Error"
 
