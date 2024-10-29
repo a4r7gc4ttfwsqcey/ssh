@@ -164,3 +164,9 @@ class TestSpreadSheet(TestCase):
         sheet.set(cell, f"='Hello'&{another_cell}")
         sheet.set(another_cell, another_cell_value)
         self.assertEqual("#Circular", sheet.evaluate(cell))
+
+    def test_eval_arithmetic_formula_with_parenthesis(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, "=2*(1+2)")
+        self.assertEqual(6, sheet.evaluate(cell))
