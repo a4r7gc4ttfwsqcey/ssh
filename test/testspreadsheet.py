@@ -39,3 +39,9 @@ class TestSpreadSheet(TestCase):
         cell = "A1"
         sheet.set(cell, "=1")
         self.assertEqual(1, sheet.evaluate(cell))
+
+    def test_eval_str_formula_invalid_quoting(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, "='Apple")
+        self.assertEqual("#Error", sheet.evaluate(cell))
