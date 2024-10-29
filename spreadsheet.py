@@ -27,6 +27,8 @@ class SpreadSheet:
                 result = value[1:-1]
             elif value.startswith("='") and value.endswith("'"):
                 result = value[2:-1]
+                if "&" in value:
+                    return result.replace("'&'", " ")
             elif value.startswith("="):
                 try:
                     # Evaluate the expression after '=' assuming it's a simple integer or a reference to another cell

@@ -125,3 +125,9 @@ class TestSpreadSheet(TestCase):
         sheet.set(cell, f"=1+{another_cell}")
         sheet.set(another_cell, another_cell_value)
         self.assertEqual("#Circular", sheet.evaluate(cell))
+
+    def test_eval_formula_with_string_concatenations(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, "='Hello'&'World'")
+        self.assertEqual("Hello World", sheet.evaluate(cell))
