@@ -72,3 +72,9 @@ class TestSpreadSheet(TestCase):
         sheet.set(cell, f"={another_cell}")
         sheet.set(another_cell, another_cell_value)
         self.assertEqual("#Circular", sheet.evaluate(cell))
+
+    def test_eval_formula_with_int_addition(self):
+        sheet = SpreadSheet()
+        cell = "A1"
+        sheet.set(cell, f"=1+3")
+        self.assertEqual(4, sheet.evaluate(cell))

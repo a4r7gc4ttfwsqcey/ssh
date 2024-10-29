@@ -28,6 +28,9 @@ class SpreadSheet:
                     # Evaluate the expression after '=' assuming it's a simple integer or a reference to another cell
                     if value[1:].isdigit():
                         result = int(value[1:])
+                    elif "+" in value:
+                        parts = value[1:].split('+')
+                        result = sum(int(part) for part in parts)
                     else:
                         result = self.evaluate(value[1:])
                 except ValueError:
